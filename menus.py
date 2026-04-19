@@ -1,9 +1,16 @@
+import os
+
 # Definição das Cores (Apenas fonte)
 amarelo = "\033[33m"
 vermelho = "\033[31m"
 verde = "\033[32m"
 azul = "\033[96m"
 reset = "\033[0m"
+
+
+
+def limparTela():
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 def recepcao():
     """
@@ -23,44 +30,100 @@ def recepcao():
     print(f"\t\t\t\tGostaria de jogar? {verde}sim{reset}/{vermelho}nao{reset}")
     print(f"{amarelo}==========================================================================================={reset}")
 
+def avisoEntradas():
+    print(f"{amarelo}==========================================================================================={reset}")
+    print(f"{vermelho}\t\t\t\t   ATENÇÃO!{reset}")
+    print(f"{amarelo}-------------------------------------------------------------------------------------------{reset}")
+    print(f"\t\t\tPor favor, insira o valor da forma correta.")
+    print(f"\t\tDigite apenas o que foi solicitado para continuar o jogo.")
+    print(f"{amarelo}==========================================================================================={reset}")
 
-def menu(palavraSecreta, dica, tentativas, chutes, acertos):
+
+def avisoRegras():
+    """
+    Função para exibir aviso de como funcionara as entradas do jogo  e as suas regras para o jogador.
+    """
+    print(f"{amarelo}==========================================================================================={reset}")
+    print(f"{vermelho}\t\t\t\t     AVISO IMPORTANTE!{reset}")
+    print(f"{amarelo}-------------------------------------------------------------------------------------------{reset}")
+    print(f"\tAntes de começar, fique atento: este jogo aceita apenas *uma letra por vez*.") 
+    print(f"\tSe você digitar mais de um caractere, a tentativa será considerada incorreta.")
+    print(f"\n{azul}\t\t      TEMA: {amarelo}Personagens de Stardew Valley{reset}")
+    print(f"\n\t\t\tCOMO FUNCIONA O JOGO?")
+    print(f"\tO computador escolherá aleatoriamente um personagem de Stardew Valley, junto com uma dica.")
+    print(f"\tAlgumas letras do nome do personagem podem já aparecer para te ajudar no início.")
+    print(f"\tSeu objetivo é descobrir qual personagem está escondido, tentando uma letra por vez.")
+    print(f"\n\t\t\tREGRAS DO DESAFIO:")
+    print(f"\t- Letras corretas que fazem parte do nome do personagem somam pontos.")
+    print(f"\t- Letras que não existem no nome fazem você perder pontos.")
+    print(f"\t- O número de tentativas é limitado, então pense bem antes de escolher!")
+    print(f"\t- O jogo termina se suas tentativas acabarem.")
+    print(f"\t- Se você descobrir o personagem antes disso, você vence!")
+    print(f"\n\t\t\tACOMPANHE SEU DESEMPENHO:")
+    print(f"\tDurante o jogo, você poderá ver quantos acertos, erros e tentativas ainda restam.")
+    print(f"\n\t\t\tREGISTRO DAS PARTIDAS:")
+    print(f"\tAo final, seus resultados serão salvos, incluindo:")
+    print(f"\tData, nome do jogador, pontuação, número de tentativas e o personagem descoberto.")
+    print(f"\n\tPrepare-se para testar seus conhecimentos sobre Stardew Valley!")
+    print(f"\tBoa sorte e divirta-se tentando descobrir o personagem escondido!")
+    print(f"{amarelo}==========================================================================================={reset}")
+
+def menu(palavraEscondida, dica, dificuldade, tentativas, chutes, acertos):
     """
     Função para exibir o menu do jogo com arte ASCII.
+
+    Args: 
+        palavraEscondida (str): palavra escondida q o usuario vai adivinhar.
+        dica (str): a dica da palavra escondida.
+        dificuldade (str): nivel de dificuldade da palavra (facil, medio, dificil)
+        tentativas (int): numero de tentativas maximas para acertar.
+        chutes (str): letras chutadas.
+        acertos (int): numero de acertps feitos.
+    
+    Returns:
+        retorna o menu com os itens inseridos
     """
     # Variável para controlar o espaçamento interno do menu
     espaco = 85
     print(fr"{amarelo} ____________________________________________________________________________________________________________________________ {reset}")
     print(fr"{amarelo}/                                                                                                                            \ {reset}")
     print(fr"{amarelo}|                                                                                                                            | {reset}")
-    print(fr"{amarelo}|                         ,---.      ,--.,--.          ,--.        ,--.                                                   | {reset}")
+    print(fr"{amarelo}|                         ,---.     ,--.,--.          ,--.        ,--.                                                       | {reset}")
     print(fr"{amarelo}|                        /  O  \  ,-|  |`--',--.  ,--.`--',--,--, |  ,---.  ,---.      ,---.                                 | {reset}")
     print(fr"{amarelo}|                       |  .-.  |' .-. |,--. \  `'  / ,--.|      \|  .-.  || .-. :    | .-. |                                | {reset}")
     print(fr"{amarelo}|                       |  | |  |\ `-' ||  |  \    /  |  ||  ||  ||  | |  |\   --.    ' '-' '                                | {reset}")
-    print(fr"{amarelo}|            ,------.    `--' `--' `---' `--'   `--'   `--'`--''--'`--' `--' `----'     `---'     ,--.                         | {reset}")
-    print(fr"{amarelo}|            |  .--. ' ,---. ,--.--. ,---.  ,---. ,--,--,  ,--,--. ,---.  ,---. ,--,--,---.     ,-|  | ,---.                  | {reset}")
-    print(fr"{amarelo}|            |  '--' || .-. :|  .--'(  .-' | .-. ||      \\' ,-.  || .-. || .-. :|        |    ' .-. || .-. :                 | {reset}")
-    print(fr"{amarelo}|            |  | --' \   --.|  |   .-'  `)' '-' '|  ||  |\ '-'  |' '-' '\\   --.|  |  |  |    \ `-' |\   --.                 | {reset}")
-    print(fr"{amarelo}|            `--'      `----'`--'   `----'  `---' `--''--' `--`--'.`-  /  `----'`--`--`--'     `---'  `----'                 | {reset}")
-    print(fr"{amarelo}|                                                                `---'                                                       | {reset}")
+    print(fr"{amarelo}|            ,------.    `--' `--' `---' `--'   `--'   `--'`--''--'`--' `--' `----'    `---'      ,--.                       | {reset}")
+    print(fr"{amarelo}|            |  .--. ' ,---. ,--.--. ,---.  ,---. ,--,--,  ,--,--. ,---.  ,---. ,--,--,---.     ,-|  | ,---.                 | {reset}")
+    print(fr"{amarelo}|            |  '--' || .-. :|  .--'(  .-' | .-. ||      \\' ,-.  || .-. || .-. :|        |    ' .-. || .-. :                | {reset}")
+    print(fr"{amarelo}|            |  | --' \   --.|  |   .-'  `)' '-' '|  ||  |\  '-'  |' '-''\\  --. |  |  |  |    \ `-' |\   --.                | {reset}")
+    print(fr"{amarelo}|            `--'      `----'`--'   `----'  `---' `--''--' `--`--' .`-  /  `----'`--`--`--'      `---'  `----'               | {reset}")
+    print(fr"{amarelo}|                                                                  `---'                                                     | {reset}")
     print(fr"{amarelo}|{vermelho}    ,---. ,--------. ,---.  ,------. ,------.  ,------.,--.   ,--.    ,--.   ,--.,---.  ,--.   ,--.   ,------.,--.   ,--.  {amarelo} | {reset}")
-    print(fr"{amarelo}|{vermelho}   '  .-''--.  .--'/  O  \ |  .--. '|  .-.  \ |  .---'|  |   |  |     \  `.'  //  O  \ |  |   |  |   |  .---' \  `.'  /   {amarelo} | {reset}")
-    print(fr"{amarelo}|{vermelho}   `.  `-.   |  |  |  .-.  ||  '--'.'|  |  \  :|  `--, |  |.'.|  |      \    /|  .-.  ||  |   |  |   |  `--,   '.    /     {amarelo} | {reset}")
-    print(fr"{amarelo}|{vermelho}   .-'    |  |  |  |  | |  ||  |\  \ |  '--'  /|  `---.|  ,'.   |       \\  / |  | |  ||  '--.|  '--.|  `---.    |  |      {amarelo} | {reset}")
-    print(fr"{amarelo}|{vermelho}   `-----'   `--'  `--' `--'`--' '--'`-------' `------''--'   '--'        `-'  `--' `--'`-----'`-----'`------'    `--'      {amarelo} | {reset}")
+    print(fr"{amarelo}|{vermelho}   '  .-''--.  .--'/   O  \ |  .--. '|  .-.  \ |  .---'|  |   |  |     \  `.'  //  O  \ |  |   |  |   |  .---' \  `.'  /   {amarelo} | {reset}")
+    print(fr"{amarelo}|{vermelho}   `.  `-.   |  |  |  .-.  ||  '--'.'|  |  \  :|  `--, |  |.'.|  |      \     /|  .-.  ||  |   |  |   |  `--,   '.    /    {amarelo} | {reset}")
+    print(fr"{amarelo}|{vermelho}   .-'    |  |  |  |  | |  ||  |\  \ |  '--'  /|  `---.|   ,'.   |       \   / |  | |  ||  '--.|  '--.|  `---.    |  |     {amarelo} | {reset}")
+    print(fr"{amarelo}|{vermelho}   `-----'   `--'  `--' `--'`--' '--'`-------' `------''--'   '--'        `-'  `--' `--'`-----'`-----'`------'    `--'     {amarelo} | {reset}")
     print(fr"{amarelo}|                                                                                                                            |{reset}")
     print(fr"{amarelo}\____________________________________________________________________________________________________________________________/{reset}")
-    print(fr"{amarelo}       |   |                                                                           |   | {reset}")
-    print(fr"{amarelo}       |   |                                                                           |   | {reset}")
-    print(fr"{amarelo}       |   |                                        {azul}personagem: {palavraSecreta:<{espaco - 36}} {amarelo}|   | {reset}")
+    print(fr"{amarelo}       |   |                                                                                                      |   | {reset}")
+    print(fr"{amarelo}       |   |                                                                                                      |   | {reset}")
+    print(fr"{amarelo}       |   |                                        {azul}personagem: {palavraEscondida:<{espaco - 36}} {amarelo}|   | {reset}")
     print(fr"{amarelo}       |   |                                        {azul}dica: {dica:<{espaco - 30}} {amarelo}|   | {reset}")
-    print(fr"{amarelo}       |   |                                                                           |   | {reset}")
+    print(fr"{amarelo}       |   |                                        {azul}dificuldade: {dificuldade:<{espaco - 37}} {amarelo}|   | {reset}")
+    print(fr"{amarelo}       |   |                                                                                                      |   | {reset}")
     print(fr"{amarelo}       |   |                                        {azul}tentativas: {str(tentativas):<{espaco - 36}} {amarelo}|   | {reset}")
     print(fr"{amarelo}       |   |                                        {azul}letras chutadas: {str(chutes):<{espaco - 41}} {amarelo}|   | {reset}")
     print(fr"{amarelo}       |   |                                        {azul}acertos: {str(acertos):<{espaco - 33}} {amarelo}|   | {reset}")
-    print(fr"{amarelo}       |   |                                                                           |   | {reset}")
-    print(fr"{amarelo}       |   |                                                                           |   | {reset}")
-    
-    # Grama
+    print(fr"{amarelo}       |   |                                                                                                      |   | {reset}")
+    print(fr"{amarelo}       |   |                                                                                                      |   | {reset}")
     print(fr"{verde}^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ {reset}")
     print(fr"{verde}^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ {reset}")
+
+def despedida():
+    """
+    Função simples se despedindo do jogador.
+    """
+    print(f"{amarelo}==========================================================================================={reset}")
+    print(f"{verde}\t\t      Obrigado pela sua atenção!{reset}")
+    print(f"{azul}\t\t      Até a próxima, agricultor! :){reset}")
+    print(f"{amarelo}==========================================================================================={reset}")
