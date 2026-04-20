@@ -6,6 +6,8 @@ vermelho = "\033[31m"
 verde = "\033[32m"
 azul = "\033[96m"
 reset = "\033[0m"
+roxo = "\033[35m"    
+
 
 
 
@@ -34,7 +36,7 @@ def avisoEntradas():
     print(f"{amarelo}==========================================================================================={reset}")
     print(f"{vermelho}\t\t\t\t   ATENÇÃO!{reset}")
     print(f"{amarelo}-------------------------------------------------------------------------------------------{reset}")
-    print(f"\t\t\tPor favor, insira o valor da forma correta.")
+    print(f"\t\t\tparece que ocorreu um erro !\n \t\t\tPor favor, insira os valores da forma correta.")
     print(f"\t\tDigite apenas o que foi solicitado para continuar o jogo.")
     print(f"{amarelo}==========================================================================================={reset}")
 
@@ -46,8 +48,8 @@ def avisoRegras():
     print(f"{amarelo}==========================================================================================={reset}")
     print(f"{vermelho}\t\t\t\t     AVISO IMPORTANTE!{reset}")
     print(f"{amarelo}-------------------------------------------------------------------------------------------{reset}")
-    print(f"\tAntes de começar, fique atento: este jogo aceita apenas *uma letra por vez*.") 
-    print(f"\tSe você digitar mais de um caractere, a tentativa será considerada incorreta.")
+    print(f"\tAntes de começar, fique atento: este jogo aceita apenas {vermelho}*uma letra por vez*.") 
+    print(f"s{vermelho}Se você digitar mais de um caractere, a tentativa será contabilizada e considerada incorreta.")
     print(f"\n{azul}\t\t      TEMA: {amarelo}Personagens de Stardew Valley{reset}")
     print(f"\n\t\t\tCOMO FUNCIONA O JOGO?")
     print(f"\tO computador escolherá aleatoriamente um personagem de Stardew Valley, junto com uma dica.")
@@ -68,7 +70,7 @@ def avisoRegras():
     print(f"\tBoa sorte e divirta-se tentando descobrir o personagem escondido!")
     print(f"{amarelo}==========================================================================================={reset}")
 
-def menu(palavraEscondida, dica, dificuldade, tentativas, chutes, acertos):
+def menu(palavraEscondida, dica, dificuldade, tentativas, tentativasMinimas, chutes, acertos, pontos):
     """
     Função para exibir o menu do jogo com arte ASCII.
 
@@ -107,17 +109,49 @@ def menu(palavraEscondida, dica, dificuldade, tentativas, chutes, acertos):
     print(fr"{amarelo}\____________________________________________________________________________________________________________________________/{reset}")
     print(fr"{amarelo}       |   |                                                                                                      |   | {reset}")
     print(fr"{amarelo}       |   |                                                                                                      |   | {reset}")
-    print(fr"{amarelo}       |   |                                        {azul}personagem: {palavraEscondida:<{espaco - 36}} {amarelo}|   | {reset}")
-    print(fr"{amarelo}       |   |                                        {azul}dica: {dica:<{espaco - 30}} {amarelo}|   | {reset}")
-    print(fr"{amarelo}       |   |                                        {azul}dificuldade: {dificuldade:<{espaco - 37}} {amarelo}|   | {reset}")
+    print(fr"{amarelo}       |   |                               {azul}Personagem: {reset}{palavraEscondida.upper():<{espaco - 27}} {amarelo}|   | {reset}")
+    print(fr"{amarelo}       |   |                               {azul}Dica: {reset}{dica:<{espaco - 21}} {amarelo}|   | {reset}")
+    print(fr"{amarelo}       |   |                               {azul}Dificuldade: {reset}{dificuldade:<{espaco - 28}} {amarelo}|   | {reset}")
+    print(fr"{amarelo}       |   |                               {azul}Tentativas Minimas: {reset}{str(tentativasMinimas):<{espaco - 35}} {amarelo}|   | {reset}")
     print(fr"{amarelo}       |   |                                                                                                      |   | {reset}")
-    print(fr"{amarelo}       |   |                                        {azul}tentativas: {str(tentativas):<{espaco - 36}} {amarelo}|   | {reset}")
-    print(fr"{amarelo}       |   |                                        {azul}letras chutadas: {str(chutes):<{espaco - 41}} {amarelo}|   | {reset}")
-    print(fr"{amarelo}       |   |                                        {azul}acertos: {str(acertos):<{espaco - 33}} {amarelo}|   | {reset}")
+    print(fr"{amarelo}       |   |                               {azul}Tentativas restantes: {reset}{str(tentativas):<{espaco - 37}} {amarelo}|   | {reset}")
+    print(fr"{amarelo}       |   |                               {azul}Letras chutadas: {reset}{str(chutes).upper():<{espaco - 32}} {amarelo}|   | {reset}")
+    print(fr"{amarelo}       |   |                               {azul}Acertos: {reset}{str(acertos):<{espaco - 24}} {amarelo}|   | {reset}")
+    print(fr"{amarelo}       |   |                               {azul}Pontos : {amarelo}{str(pontos):<{espaco - 24}} |   | {reset}")
     print(fr"{amarelo}       |   |                                                                                                      |   | {reset}")
     print(fr"{amarelo}       |   |                                                                                                      |   | {reset}")
     print(fr"{verde}^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ {reset}")
     print(fr"{verde}^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ {reset}")
+
+def identificação():
+    print(f"{amarelo}==========================================================================================={reset}")
+    print(f"{azul}\t\t\t\t   IDENTIFICAÇÃO DO JOGADOR{reset}")
+    print(f"{amarelo}-------------------------------------------------------------------------------------------{reset}")
+    print(f"\tAntes de começar, digite seu nome para registrarmos sua partida.")
+    print(f"\tIsso permitirá salvar sua pontuação e gerar um histórico no arquivo.txt.")
+    print(f"{amarelo}==========================================================================================={reset}")
+
+def vitoria(palavra, pontos, jogador):
+    print(f"{amarelo}==========================================================================================={reset}")
+    print(f"{verde}\t\t\t\t   PARABÉNS! {roxo}{jogador}{reset}")
+    print(f"{amarelo}-------------------------------------------------------------------------------------------{reset}")
+    print(f"\tVocê acertou! A palavra era: {azul}{palavra}{reset}")
+    print(f"\tMandou muito bem!")
+    print(f"\tSua pontuação foi de {verde}{pontos} {reset}")
+    print(f"\n\tPara ver o histórico das suas partidas,")
+    print(f"\tabra o arquivo.txt e confira seus resultados.")
+    print(f"{amarelo}==========================================================================================={reset}")
+
+def derrota(palavra, pontos, jogador):
+    print(f"{amarelo}==========================================================================================={reset}")
+    print(f"{vermelho}\t\t\t\t   QUE PENA {roxo}{jogador}{reset}")
+    print(f"{amarelo}-------------------------------------------------------------------------------------------{reset}")
+    print(f"\tA palavra era: {azul}{palavra}{reset}")
+    print(f"\tMais sorte da próxima vez!")
+    print(f"\tSua pontuação foi de {vermelho} {pontos} {reset}")
+    print(f"\n\tSe quiser ver o histórico de partidas,")
+    print(f"\tabra o arquivo.txt para verificar suas respostas.")
+    print(f"{amarelo}==========================================================================================={reset}")
 
 def despedida():
     """
