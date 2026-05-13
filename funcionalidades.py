@@ -1,14 +1,41 @@
-import listaPalavras
 import random
 
-def sortearPalavra():
+def sortearPalavra(listaPalavras):
     """
     Função para sortear uma lista com (palavra,dica e dificuldade) de listaPalavras.
+
+    Args: 
+        listaPalavras (list): recebe a lista de palavras para poder sortear.
     """
     numero = 0
-    numero = random.randint(0, 29)
-    palavraSecreta = listaPalavras.palavras[numero]
+    numero = random.randint(0, len(listaPalavras)-1)
+    palavraSecreta = listaPalavras[numero]
     return palavraSecreta
+
+def LerArquivo():
+    """
+        Função para ler o arquivo de palavras
+
+        Returns: 
+            dados (list): retorna toda a lista de palavras em uma lista de lista.
+    """
+
+    vl = " "
+    dados = []
+    arquivo = open ("listaPalavras.txt", "r", encoding="utf-8")
+
+    while(vl!=""):
+        vl = arquivo.readline()
+        if(vl!=""):
+            vl = vl.split("|") #separando os campos, nome, dica e dificuldade
+            nome = vl[0]
+            dica = vl[1]
+            dificuldade = vl[2]
+            dificuldade = dificuldade.split("\n")[0] #tira o \n no final da linha
+            aux = [nome,dica,dificuldade]
+            dados.append(aux)
+    
+    return dados
 
 def esconderPalavra(palavra):
     """
@@ -92,13 +119,24 @@ def verificarLetra(palavra, palavraEscondida, acertos, chutes, resposta, pontos)
     return novaPalavraEscondida, acertos, chutes, pontos
 
 def palavraCompleta(palavraEscondida, palavra):
+    """
+    Função para Verificar se a Palavra foi concluida, todas as letras ja foram desvendadas.
+
+    Args: 
+        palavraEscondida (str): recebe a palavraSecreta.
+        palavra (str): recebe a palavra sorteada.
+    Returns: 
+        palavraConcluida (int): retorna a palavra concluida (maneira boleana) se estiver completa retorna 1 senão retorna 0
+    """
     contador = 0
     letraAcertada = 0
     palavraConcluida = 0
+    #percorre a palavra escondida e verifica quantas letras foram acertadas
     while(contador < len(palavraEscondida)):
         if (palavraEscondida[contador] != " " and palavraEscondida[contador] != "_"):
             letraAcertada += 1   
         contador +=1
+    #se for acertada a mesma quantidade de letras da palavra retorna 1 senão 0
     if(letraAcertada == len(palavra)):
         palavraConcluida = 1
     else:
@@ -141,14 +179,30 @@ def listaDeLetras(palavra):
     return letras
 
 def historico(nome,tentativas,pontos,palavra,chutes,acertos,acertou,data):
-        with open("historico.txt", "a", encoding="utf-8") as arquivo:
-            arquivo.write("==================================================================================================================\n")
-            arquivo.write(f"  - Jogador: {nome}\n")
-            arquivo.write(f"  - Tentativas Restantes: {tentativas}\n")
-            arquivo.write(f"  - Pontuação Final: {pontos}\n")
-            arquivo.write(f"  - Palavra Secreta: {palavra}\n")
-            arquivo.write(f"  - Letras Chutadas: {chutes}\n")
-            arquivo.write(f"  - Quantidade de Acertos: {acertos}\n")
-            arquivo.write(f"  - Acertou a Palavra?: {acertou}\n")
-            arquivo.write(f"  - Data da Partida: {data}\n")
-            arquivo.write("==================================================================================================================\n\n")   
+    """
+    Função para Calcular o numero de tentativas baseado em tamanho palavra e dificuldade.
+
+    Args: 
+        nome (str): nome do jogador.
+        tentativas (int): numero de tentativas restantes.
+        pontos (int): quantidade de pontos feitos.
+        palavra (str): palavra sorteada.
+        chutes (list): letras chutadas.
+        acertos (int): quantidades de acertos.
+        acertou (str): se acertou a palavra ao final do jogo ('sim!' ou 'não :(' ).
+        data (datatime): data e hora em que a pessoa jogou.
+        
+    Returns: não retorna algo diretamente, a função executada cria um arquivo.txt como forma de historico
+    """
+    arquivo = open("historico.txt", "a", encoding="utf-8")
+    arquivo.write("==================================================================================================================\n")
+    arquivo.write(f"  - Jogador: {nome}\n")
+    arquivo.write(f"  - Tentativas Restantes: {tentativas}\n")
+    arquivo.write(f"  - Pontuação Final: {pontos}\n")
+    arquivo.write(f"  - Palavra Secreta: {palavra}\n")
+    arquivo.write(f"  - Letras Chutadas: {chutes}\n")
+    arquivo.write(f"  - Quantidade de Acertos: {acertos}\n")
+    arquivo.write(f"  - Acertou a Palavra?: {acertou}\n")
+    arquivo.write(f"  - Data da Partida: {data}\n")
+    arquivo.write("==================================================================================================================\n\n")   
+    arquivo.close()

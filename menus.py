@@ -12,6 +12,9 @@ roxo = "\033[35m"
 
 
 def limparTela():
+    """
+    Função para limpar a tela do terminal.
+    """
     os.system('cls' if os.name == 'nt' else 'clear')
 
 def recepcao():
@@ -33,6 +36,9 @@ def recepcao():
     print(f"{amarelo}==========================================================================================={reset}")
 
 def avisoEntradas():
+    """
+    Função para exibir o aviso a respeito as entradas entradas para o jogador.
+    """
     print(f"{amarelo}==========================================================================================={reset}")
     print(f"{vermelho}\t\t\t\t   ATENÇÃO!{reset}")
     print(f"{amarelo}-------------------------------------------------------------------------------------------{reset}")
@@ -82,8 +88,6 @@ def menu(palavraEscondida, dica, dificuldade, tentativas, tentativasMinimas, chu
         chutes (str): letras chutadas.
         acertos (int): numero de acertps feitos.
     
-    Returns:
-        retorna o menu com os itens inseridos
     """
     # Variável para controlar o espaçamento interno do menu
     espaco = 85
@@ -124,6 +128,9 @@ def menu(palavraEscondida, dica, dificuldade, tentativas, tentativasMinimas, chu
     print(fr"{verde}^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ {reset}")
 
 def identificação():
+    """
+    Função para exibir a mensagem pedindo para o jogador se indentificar (nome).
+    """
     print(f"{amarelo}==========================================================================================={reset}")
     print(f"{azul}\t\t\t\t   IDENTIFICAÇÃO DO JOGADOR{reset}")
     print(f"{amarelo}-------------------------------------------------------------------------------------------{reset}")
@@ -132,6 +139,14 @@ def identificação():
     print(f"{amarelo}==========================================================================================={reset}")
 
 def vitoria(palavra, pontos, jogador):
+    """
+    Função para exibir a mensagem de vitoria.
+
+    Args:
+        palavra (str): a palavra q o jogador conseguiu adivinhar.
+        pontos (int): o numero de pontos feitos pelo jogador
+        jogador (str): o nome do jogador.
+    """
     print(f"{amarelo}==========================================================================================={reset}")
     print(f"{verde}\t\t\t\t   PARABÉNS! {roxo}{jogador}{reset}")
     print(f"{amarelo}-------------------------------------------------------------------------------------------{reset}")
@@ -143,6 +158,14 @@ def vitoria(palavra, pontos, jogador):
     print(f"{amarelo}==========================================================================================={reset}")
 
 def derrota(palavra, pontos, jogador):
+    """
+    Função para exibir a mensagem de derrota.
+
+    Args:
+        palavra (str): a palavra q o jogador deveria adivinhar.
+        pontos (int): o numero de pontos feitos pelo jogador
+        jogador (str): o nome do jogador.
+    """
     print(f"{amarelo}==========================================================================================={reset}")
     print(f"{vermelho}\t\t\t\t   QUE PENA {roxo}{jogador}{reset}")
     print(f"{amarelo}-------------------------------------------------------------------------------------------{reset}")
@@ -155,7 +178,7 @@ def derrota(palavra, pontos, jogador):
 
 def despedida():
     """
-    Função simples se despedindo do jogador.
+    Função simples mostra a mensagem de despedida do jogador.
     """
     print(f"{amarelo}==========================================================================================={reset}")
     print(f"{verde}\t\t      Obrigado pela sua atenção!{reset}")
