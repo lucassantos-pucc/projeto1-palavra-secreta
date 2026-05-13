@@ -6,6 +6,7 @@ from datetime import datetime
 roxo = "\033[35m"   
 reset = "\033[0m"
 
+listaPalavras = []
 numero = 0
 inicioPrograma = 0
 inicioJogo = 0
@@ -41,7 +42,8 @@ try:
 
         if(jogar == "sim"):
             menus.limparTela()
-            listaSecreta = funcionalidades.sortearPalavra()
+            listaPalavras = funcionalidades.LerArquivo()
+            listaSecreta = funcionalidades.sortearPalavra(listaPalavras)
 
             #definindo palavra secreta, dica e dificuldade
             palavra = listaSecreta[0]
@@ -138,5 +140,5 @@ try:
             menus.avisoEntradas()
             time.sleep(2)
 except:
-    menus.avisoEntradas
+    menus.avisoEntradas()
     time.sleep(2)
